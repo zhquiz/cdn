@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from gtts import gTTS
 
 app = FastAPI()
-app.mount("/f", StaticFiles("static"), name="static")
+app.mount("/f", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
