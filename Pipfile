@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 gtts = "*"
 fastapi = "*"
+aiofiles = "*"
 
 [dev-packages]
 uvicorn = "*"
