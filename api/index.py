@@ -11,11 +11,11 @@ app = FastAPI()
 @app.get("/api/tts")
 def api_tts(q: str, lang: str):
     safe_q = re.sub(r"\W+", q, " ")
-    print(Path.cwd())
-    save_path = Path("public", lang, safe_q + ".mp3")
+    cache_path = "cache"
+    save_path = Path(cache_path, lang, safe_q + ".mp3")
 
     if not save_path.exists():
-        Path("public", lang).mkdir(exist_ok=True)
+        Path(cache_path, lang).mkdir(exist_ok=True)
         gTTS(q, lang=lang).save(str(save_path))
 
     def iter_file():
