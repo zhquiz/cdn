@@ -8,6 +8,7 @@ gtts = "*"
 fastapi = "*"
 aiofiles = "*"
 uvicorn = "*"
+gunicorn = "*"
 
 [dev-packages]
 
