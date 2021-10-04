@@ -2,13 +2,18 @@ import re
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from gtts import gTTS
 
 app = FastAPI()
 app.mount("/f", StaticFiles("static"), name="static")
+
+
+@app.get("/")
+def docs():
+    return RedirectResponse("/docs")
 
 @app.get("/api/tts")
 def api_tts(q: str, lang: str):
