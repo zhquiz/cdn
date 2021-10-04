@@ -7,9 +7,9 @@ name = "pypi"
 gtts = "*"
 fastapi = "*"
 aiofiles = "*"
+uvicorn = "*"
 
 [dev-packages]
-uvicorn = "*"
 
 [requires]
 python_version = "3.9"
