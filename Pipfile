@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-gtts = "*"
 fastapi = "*"
 aiofiles = "*"
 uvicorn = "*"
 gunicorn = "*"
+gtts = {git = "https://github.com/patarapolw/gTTS.git"}
 
 [dev-packages]
 
