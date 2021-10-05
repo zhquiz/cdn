@@ -9,6 +9,7 @@ aiofiles = "*"
 uvicorn = "*"
 gunicorn = "*"
 gtts = {git = "https://github.com/patarapolw/gTTS.git"}
+wordfreq = {extras = ["cjk"], version = "*"}
 
 [dev-packages]
 
