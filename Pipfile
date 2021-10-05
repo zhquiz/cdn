@@ -4,14 +4,25 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
-aiofiles = "*"
-uvicorn = "*"
-gunicorn = "*"
+fastapi = ">=0.68.1"
+aiofiles = ">=0.7.0"
+uvicorn = ">=0.15.0"
+gunicorn = ">=20.1.0"
 gtts = {git = "https://github.com/patarapolw/gTTS.git"}
-wordfreq = {extras = ["cjk"], version = "*"}
+wordfreq = {extras = ["cjk"], version = ">=2.5.1"}
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+dev = '''
+bash -c '
+    PORT=${PORT:-8000}
+    uvicorn server:app --reload --port $PORT &
+    until nc -z localhost $PORT; do sleep 1; done
+    python -m webbrowser "http://localhost:$PORT"
+    wait
+'
+'''
