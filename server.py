@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
 from typing import Dict
+from urllib.parse import urlencode
 
 from fastapi import FastAPI, Body
 from fastapi.responses import StreamingResponse, RedirectResponse
@@ -17,10 +18,10 @@ app.mount("/f", StaticFiles(directory="static"), name="static")
 async def docs():
     return RedirectResponse("/docs")
 
-@app.get("/api/tts", summary="gTTS API", response_class=StreamingResponse, responses={
+@app.get("/tts", summary="gTTS API", response_class=StreamingResponse, responses={
     200: {"content": {"audio/mpeg": {}}}
 })
-async def api_tts(q: str, lang: str):
+async def tts(q: str, lang: str):
     safe_q = re.sub(r"\W+", q, " ")
     cache_path = "static"
     save_path = Path(cache_path, lang, safe_q + ".mp3")
@@ -34,6 +35,13 @@ async def api_tts(q: str, lang: str):
             yield from f
 
     return StreamingResponse(iter_file(), media_type="audio/mpeg")
+
+
+@app.get("/api/tts", summary="gTTS API", response_class=StreamingResponse, responses={
+    307: {"content": {"audio/mpeg": {}}}
+})
+async def api_tts(q: str, lang: str):
+    return RedirectResponse(f"/tts?q={urlencode(q)}&lang={urlencode(lang)}")
 
 
 @app.get("/api/wordfreq", summary="GET Python wordfreq", response_model=Dict[str, float])
