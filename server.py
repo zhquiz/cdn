@@ -1,10 +1,9 @@
 import re
 from pathlib import Path
 from typing import Dict
-from urllib.parse import urlencode
 
 from fastapi import FastAPI, Body
-from fastapi.responses import StreamingResponse, RedirectResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from gtts import gTTS
@@ -14,9 +13,9 @@ app = FastAPI()
 app.mount("/f", StaticFiles(directory="static"), name="static")
 
 
-@app.get("/")
-async def docs():
-    return RedirectResponse("/docs")
+@app.get("/", include_in_schema=False)
+async def index():
+    return FileResponse("static/index.html")
 
 @app.get("/tts/{lang}/{q}.mp3", summary="gTTS API", response_class=StreamingResponse, responses={
     200: {"content": {"audio/mpeg": {}}}

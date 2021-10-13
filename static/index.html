@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/f/favicon.png" type="image/png">
     <title>Zhquiz CDN</title>
 </head>
 <body>
-    
+    <form method="get" style="max-width: 600px;">
+        <label for="q">Word:</label>
+        <input type="text" name="q" value="你好！">
+        <label for="lang">Language code:</label>
+        <input type="text" name="lang" value="zh">
+        <button type="submit">Reload</button>
+    </form>
+    <audio onplay="if (!src) {
+        if (!location.search) { document.querySelector('button').click(); return }
+        const u = new window.URL(location.href).searchParams
+        src = `/tts/${encodeURIComponent(u.get('lang') || 'en_US')}/${encodeURIComponent(u.get('q'))}.mp3`; play()
+    }" controls></audio>
 </body>
 </html>
